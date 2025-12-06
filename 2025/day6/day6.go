@@ -13,7 +13,7 @@ Solve https://adventofcode.com/2025/day/6
 */
 func Solve() {
 	fmt.Println("2025/day/6 pt1", solvePt1(util.ReadLines("./2025/day6/input1.txt")))
-	fmt.Println("2025/day/6 pt2", solvePt2(util.ReadLines("./2025/day6/input0.txt")))
+	fmt.Println("2025/day/6 pt2", solvePt2(util.ReadLinesNoTrim("./2025/day6/input0.txt")))
 }
 
 // solvePt2 solves part 1 of the puzzle
@@ -22,7 +22,7 @@ func solvePt2(lines []string) int {
 	rows := len(lines)
 	result := 0
 	total := 0
-	sign := ""
+	operator := ""
 
 	for col := range cols {
 		buffer := 0
@@ -34,18 +34,18 @@ func solvePt2(lines []string) int {
 			if row == rows-1 { // last row
 				// apply last operator
 				if char == '+' || char == '*' {
-					sign = string(char)
+					operator = string(char)
 					result = buffer
 				}
 				// blank col
 				if buffer == 0 && char == ' ' {
 					total += result
 					result = 0
-					sign = ""
+					operator = ""
 					continue
 				}
 				if char == ' ' {
-					switch sign {
+					switch operator {
 					case "+":
 						result += buffer
 					case "*":
