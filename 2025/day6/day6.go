@@ -13,7 +13,7 @@ Solve https://adventofcode.com/2025/day/6
 */
 func Solve() {
 	fmt.Println("2025/day/6 pt1", solvePt1(util.ReadLines("./2025/day6/input1.txt")))
-	fmt.Println("2025/day/6 pt2", solvePt2(util.ReadLinesNoTrim("./2025/day6/input0.txt")))
+	fmt.Println("2025/day/6 pt2", solvePt2(util.ReadLinesNoTrim("./2025/day6/input1.txt")))
 }
 
 // solvePt2 solves part 1 of the puzzle
@@ -27,7 +27,12 @@ func solvePt2(lines []string) int {
 	for col := range cols {
 		buffer := 0
 		for row := range rows {
-			char := lines[row][col]
+			var char uint8 = ' '
+			// uneven line lengths - cannot be bothered to clean input
+			if col < len(lines[row]) {
+				char = lines[row][col]
+			}
+			// element is a digit
 			if char >= '0' && char <= '9' {
 				buffer = buffer*10 + int(char-'0')
 			}
@@ -55,11 +60,13 @@ func solvePt2(lines []string) int {
 					}
 				}
 			}
-			fmt.Println("col", col, "row", row, "char", string(char), "buffer", buffer, "result", result, "total", total)
+			//fmt.Println("col", col, "row", row, "char", string(char), "buffer", buffer, "result", result, "total", total)
 
 		}
 	}
-	return 0
+	// apply last result
+	total += result
+	return total
 }
 
 // solvePt1 solves part 1 of the puzzle

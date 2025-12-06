@@ -17,8 +17,12 @@ var l = util.ReadLines("input.txt")
 // BenchmarkSolutionPt1
 // BenchmarkSolutionPt1-8          1000000000               0.001142 ns/op
 func BenchmarkSolutionPt2(t *testing.B) {
-	solvePt2(l)
+	for t.Loop() {
+		solvePt2(l)
+	}
 }
 func BenchmarkSolutionPt1(t *testing.B) {
-	solvePt1(l)
+	for t.Loop() {
+		solvePt1(l)
+	}
 }

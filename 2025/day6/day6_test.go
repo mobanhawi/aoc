@@ -9,9 +9,9 @@ import (
 func Test_solve(t *testing.T) {
 	lines := util.ReadLines("input.txt")
 	want1 := 4449991244405
-	want2 := 3263827
+	want2 := 9348430857627
 	got1 := solvePt1(lines)
-	got2 := solvePt2(util.ReadLinesNoTrim("input0.txt"))
+	got2 := solvePt2(util.ReadLinesNoTrim("input.txt"))
 
 	if got1 != want1 {
 		t.Errorf("Test solvePt1 wanted %v got %v", want1, got1)
