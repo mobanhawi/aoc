@@ -36,17 +36,32 @@ func solve(lines []string) int {
 	lenX := len(lines[0])
 	lenY := len(lines)
 	// Implement logic to solve the puzzle here
-	for x := 0; x < lenX; x++ {
-		for y := 0; y < lenY; y++ {
-			if board[x][y] && adjancentOccupancy(board, x, y) < 4 {
-				access++
-			}
+	for {
+		removed := countAndRemove(board, lenX, lenY)
+		if removed == 0 {
+			break
 		}
+		access += removed
 	}
+
 	return access
 }
 
-// if there are fewer than four rolls of paper in the eight adjacent positions
+// countAndRemove counts and removes rolls of paper that have fewer than four adjacent rolls
+func countAndRemove(board Board, lenX, lenY int) int {
+	count := 0
+	for x := 0; x < lenX; x++ {
+		for y := 0; y < lenY; y++ {
+			if board[x][y] && adjancentOccupancy(board, x, y) < 4 {
+				count++
+				board[x][y] = false // remove roll of paper
+			}
+		}
+	}
+	return count
+}
+
+// adjancentOccupancy counts the number of adjacent occupied rolls of paper
 func adjancentOccupancy(board Board, x, y int) int {
 	count := 0
 	// move in 8 directions
