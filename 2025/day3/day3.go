@@ -22,43 +22,43 @@ func Solve() {
 	fmt.Println("2025/day/3 part2", solvePt2(lines))
 }
 
-// solveWithDesiredLevels finds the maximum joltage by keeping the desiredLevels highest levels from each line
+// solveWithNumBatteries finds the maximum joltage by keeping the n highest batteries levels from each bank
 // and dropping the rest
-// It returns the total joltage across all lines
-func solveWithDesiredLevels(lines []string, desiredLevels int) int {
+// It returns the total joltage across all banks
+func solveWithNumBatteries(lines []string, numBatteries int) int {
 	joltage := 0
 	for _, line := range lines {
-		levels := make([]int, len(line))
+		banks := make([]int, len(line))
 		for i, char := range line {
 			l, _ := strconv.Atoi(string(char))
-			levels[i] = l
+			banks[i] = l
 		}
-		nLevels := len(levels)
 		// drop the n lowest levels
-		for _ = range nLevels - desiredLevels {
+		for _ = range len(banks) - numBatteries {
 			minIndex := 0
-			for i, level := range levels {
+			for i, level := range banks {
 				// if we reached the end drop the least significant digit
-				if i == len(levels)-1 {
+				if i == len(banks)-1 {
 					minIndex = i
 					break
 				}
 				// we are travesing from most significant to least significant digit
 				// drop the first level that is lower than the next one
-				if level < levels[i+1] {
+				if level < banks[i+1] {
 					minIndex = i
 					break
 				}
 			}
-			// remove level at minIndex
-			levels = append(levels[:minIndex], levels[minIndex+1:]...)
+			// remove battery at minIndex
+			banks = append(banks[:minIndex], banks[minIndex+1:]...)
 			// fmt.Println("removed ", minLevel, " levels now ", levels)
 		}
-		levelJoltage := 0
-		for i := range desiredLevels {
-			levelJoltage += levels[i] * int(math.Pow(10, float64((desiredLevels-1-i))))
+		bankJoltage := 0
+		for i := range numBatteries {
+			// add level joltage for this bank from most significant to least significant digit
+			bankJoltage += banks[i] * int(math.Pow(10, float64((numBatteries-1-i))))
 		}
-		joltage += levelJoltage
+		joltage += bankJoltage
 		// fmt.Println("line ", line, "total joltage ", joltage, " joltage ", levelJoltage)
 	}
 	return joltage
@@ -67,11 +67,11 @@ func solveWithDesiredLevels(lines []string, desiredLevels int) int {
 // solvePt2 solves part 2 of the puzzle
 // It calculates the total voltage based on the 12 levels in each line
 func solvePt2(lines []string) int {
-	return solveWithDesiredLevels(lines, 12)
+	return solveWithNumBatteries(lines, 12)
 }
 
 // solvePt1 solves part 1 of the puzzle
 // It calculates the total voltage based on the two highest levels in each line
 func solvePt1(lines []string) int {
-	return solveWithDesiredLevels(lines, 2)
+	return solveWithNumBatteries(lines, 2)
 }
