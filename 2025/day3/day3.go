@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"math"
 	"os"
-	"slices"
 	"strconv"
 	"strings"
 )
@@ -23,14 +22,10 @@ func Solve() {
 	fmt.Println("2025/day/3 part2", solvePt2(lines))
 }
 
-type Node struct {
-	Level int
-	Index int
-}
-
-// solvePt2 solves part 2 of the puzzle
-// It calculates the total voltage based on the 12 levels in each line
-func solvePt2(lines []string) int {
+// solveWithDesiredLevels finds the maximum joltage by keeping the desiredLevels highest levels from each line
+// and dropping the rest
+// It returns the total joltage across all lines
+func solveWithDesiredLevels(lines []string, desiredLevels int) int {
 	joltage := 0
 	for _, line := range lines {
 		levels := make([]int, len(line))
@@ -39,7 +34,6 @@ func solvePt2(lines []string) int {
 			levels[i] = l
 		}
 		nLevels := len(levels)
-		desiredLevels := 12
 		// drop the n lowest levels
 		for _ = range nLevels - desiredLevels {
 			minIndex := 0
@@ -70,26 +64,14 @@ func solvePt2(lines []string) int {
 	return joltage
 }
 
+// solvePt2 solves part 2 of the puzzle
+// It calculates the total voltage based on the 12 levels in each line
+func solvePt2(lines []string) int {
+	return solveWithDesiredLevels(lines, 12)
+}
+
 // solvePt1 solves part 1 of the puzzle
 // It calculates the total voltage based on the two highest levels in each line
 func solvePt1(lines []string) int {
-	voltage := 0
-	for _, line := range lines {
-		levels := make([]Node, len(line))
-		for i, char := range line {
-			l, _ := strconv.Atoi(string(char))
-			levels[i] = Node{Level: l, Index: i}
-		}
-		levelsWithoutLast := levels[:len(line)-1]
-		element1 := slices.MaxFunc(levelsWithoutLast, func(a, b Node) int {
-			return a.Level - b.Level
-		})
-		levelsAfterFirst := levels[element1.Index+1:]
-		element2 := slices.MaxFunc(levelsAfterFirst, func(a, b Node) int {
-			return a.Level - b.Level
-		})
-		voltage += element1.Level*10 + element2.Level
-		//fmt.Println(line, "->", element1.Level, element2.Level, "->", voltage)
-	}
-	return voltage
+	return solveWithDesiredLevels(lines, 2)
 }
