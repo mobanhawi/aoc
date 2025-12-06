@@ -18,6 +18,47 @@ func Solve() {
 
 // solvePt2 solves part 1 of the puzzle
 func solvePt2(lines []string) int {
+	cols := len(lines[0])
+	rows := len(lines)
+	result := 0
+	total := 0
+	sign := ""
+
+	for col := range cols {
+		buffer := 0
+		for row := range rows {
+			char := lines[row][col]
+			if char >= '0' && char <= '9' {
+				buffer = buffer*10 + int(char-'0')
+			}
+			if row == rows-1 { // last row
+				// apply last operator
+				if char == '+' || char == '*' {
+					sign = string(char)
+					result = buffer
+				}
+				// blank col
+				if buffer == 0 && char == ' ' {
+					total += result
+					result = 0
+					sign = ""
+					continue
+				}
+				if char == ' ' {
+					switch sign {
+					case "+":
+						result += buffer
+					case "*":
+						result *= buffer
+					default:
+						panic("unknown operator")
+					}
+				}
+			}
+			fmt.Println("col", col, "row", row, "char", string(char), "buffer", buffer, "result", result, "total", total)
+
+		}
+	}
 	return 0
 }
 
