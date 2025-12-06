@@ -3,7 +3,6 @@ package day3
 import (
 	"fmt"
 	"math"
-	"strconv"
 
 	"github.com/mobanhawi/aoc/2025/util"
 )
@@ -25,7 +24,7 @@ func solveWithNumBatteries(lines []string, numBatteries int) int {
 	for _, line := range lines {
 		banks := make([]int, len(line))
 		for i, char := range line {
-			l, _ := strconv.Atoi(string(char))
+			l := int(char - '0')
 			banks[i] = l
 		}
 		// drop the n lowest levels
