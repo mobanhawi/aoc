@@ -17,12 +17,53 @@ func Solve() {
 	}
 
 	lines := strings.Split(strings.TrimSpace(string(input)), "\n")
-	fmt.Println("2025/day/5", solvePt1(lines))
+	fmt.Println("2025/day/5 pt1", solvePt1(lines))
+	fmt.Println("2025/day/5 pt2", solvePt2(lines))
 }
 
 type Range struct {
 	min int
 	max int
+}
+
+// solvePt2 solves part 1 of the puzzle
+// It counts how many numbers are valid according to the given ranges
+func solvePt2(lines []string) int {
+	ranges := make([]Range, 0)
+	validIDs := 0
+	for _, line := range lines {
+		if strings.Contains(line, "-") {
+			var r Range
+			fmt.Sscanf(line, "%d-%d", &r.min, &r.max)
+			ranges = append(ranges, r)
+		}
+	}
+
+	slices.SortFunc(ranges, func(a, b Range) int {
+		return a.min - b.min
+	})
+
+	// combine overlapping ranges
+	combined := make([]Range, 0)
+	current := ranges[0]
+	for i := 1; i < len(ranges); i++ {
+		if ranges[i].min <= current.max {
+			if ranges[i].max > current.max {
+				current.max = ranges[i].max
+			}
+		} else {
+			combined = append(combined, current)
+			current = ranges[i]
+		}
+	}
+	combined = append(combined, current)
+
+	// count valid IDs
+	for _, r := range combined {
+		validIDs += r.max - r.min + 1
+	}
+
+	return validIDs
 }
 
 // solvePt1 solves part 1 of the puzzle
