@@ -3,9 +3,9 @@ package day1
 import (
 	"fmt"
 	"log"
-	"os"
 	"strconv"
-	"strings"
+
+	"github.com/mobanhawi/aoc/2025/util"
 )
 
 /*
@@ -27,13 +27,7 @@ regardless of whether it happens during a rotation or at the end of one.
 */
 
 func Solve() {
-	input, err := os.ReadFile("2025/day1/input.txt")
-	if err != nil {
-		panic(err)
-	}
-
-	lines := strings.Split(strings.TrimSpace(string(input)), "\n")
-	fmt.Println("2025/day1", solve(lines, 50))
+	fmt.Println("2025/day1", solve(util.ReadLines("2025/day1/input.txt"), 50))
 }
 
 func solve(sequence []string, position int) int {

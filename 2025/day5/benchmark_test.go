@@ -1,0 +1,24 @@
+package day5
+
+import (
+	"testing"
+
+	"github.com/mobanhawi/aoc/2025/util"
+)
+
+var l = util.ReadLines("input.txt")
+
+// goos: darwin
+// goarch: arm64
+// pkg: github.com/mobanhawi/aoc/2025/day5
+// cpu: Apple M1 Pro
+// BenchmarkSolutionPt2
+// BenchmarkSolutionPt2-8          1000000000               0.0003320 ns/op
+// BenchmarkSolutionPt1
+// BenchmarkSolutionPt1-8          1000000000               0.001142 ns/op
+func BenchmarkSolutionPt2(t *testing.B) {
+	solvePt2(l)
+}
+func BenchmarkSolutionPt1(t *testing.B) {
+	solvePt1(l)
+}

@@ -2,21 +2,15 @@ package day4
 
 import (
 	"fmt"
-	"os"
-	"strings"
+
+	"github.com/mobanhawi/aoc/2025/util"
 )
 
 /*
 Solve https://adventofcode.com/2025/day/4
 */
 func Solve() {
-	input, err := os.ReadFile("2025/day4/input.txt")
-	if err != nil {
-		panic(err)
-	}
-
-	lines := strings.Split(strings.TrimSpace(string(input)), "\n")
-	fmt.Println("2025/day/4", solve(lines))
+	fmt.Println("2025/day/4", solve(util.ReadLines("2025/day4/input.txt")))
 }
 
 type Board map[int]map[int]bool
@@ -52,7 +46,7 @@ func countAndRemove(board Board, lenX, lenY int) int {
 	count := 0
 	for x := 0; x < lenX; x++ {
 		for y := 0; y < lenY; y++ {
-			if board[x][y] && adjancentOccupancy(board, x, y) < 4 {
+			if board[x][y] && adjacentOccupancy(board, x, y) < 4 {
 				count++
 				board[x][y] = false // remove roll of paper
 			}
@@ -61,8 +55,8 @@ func countAndRemove(board Board, lenX, lenY int) int {
 	return count
 }
 
-// adjancentOccupancy counts the number of adjacent occupied rolls of paper
-func adjancentOccupancy(board Board, x, y int) int {
+// adjacentOccupancy counts the number of adjacent occupied rolls of paper
+func adjacentOccupancy(board Board, x, y int) int {
 	count := 0
 	// move in 8 directions
 	for dx := -1; dx <= 1; dx++ {

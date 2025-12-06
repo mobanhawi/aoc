@@ -2,23 +2,18 @@ package day5
 
 import (
 	"fmt"
-	"os"
 	"slices"
 	"strings"
+
+	"github.com/mobanhawi/aoc/2025/util"
 )
 
 /*
 Solve https://adventofcode.com/2025/day/5
 */
 func Solve() {
-	input, err := os.ReadFile("2025/day5/input.txt")
-	if err != nil {
-		panic(err)
-	}
-
-	lines := strings.Split(strings.TrimSpace(string(input)), "\n")
-	fmt.Println("2025/day/5 pt1", solvePt1(lines))
-	fmt.Println("2025/day/5 pt2", solvePt2(lines))
+	fmt.Println("2025/day/5 pt1", solvePt1(util.ReadLines("./2025/day5/input.txt")))
+	fmt.Println("2025/day/5 pt2", solvePt2(util.ReadLines("./2025/day5/input.txt")))
 }
 
 type Range struct {

@@ -3,21 +3,16 @@ package day3
 import (
 	"fmt"
 	"math"
-	"os"
 	"strconv"
-	"strings"
+
+	"github.com/mobanhawi/aoc/2025/util"
 )
 
 /*
 Solve https://adventofcode.com/2025/day/3
 */
 func Solve() {
-	input, err := os.ReadFile("2025/day3/input.txt")
-	if err != nil {
-		panic(err)
-	}
-
-	lines := strings.Split(strings.TrimSpace(string(input)), "\n")
+	lines := util.ReadLines("2025/day3/input.txt")
 	fmt.Println("2025/day/3 part1", solvePt1(lines))
 	fmt.Println("2025/day/3 part2", solvePt2(lines))
 }
@@ -56,7 +51,7 @@ func solveWithNumBatteries(lines []string, numBatteries int) int {
 		bankJoltage := 0
 		for i := range numBatteries {
 			// add level joltage for this bank from most significant to least significant digit
-			bankJoltage += banks[i] * int(math.Pow(10, float64((numBatteries-1-i))))
+			bankJoltage += banks[i] * int(math.Pow(10, float64(numBatteries-1-i)))
 		}
 		joltage += bankJoltage
 		// fmt.Println("line ", line, "total joltage ", joltage, " joltage ", levelJoltage)
