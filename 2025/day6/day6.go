@@ -12,8 +12,8 @@ import (
 Solve https://adventofcode.com/2025/day/6
 */
 func Solve() {
-	fmt.Println("2025/day/6 pt1", solvePt1(util.ReadLines("./2025/day6/input1.txt")))
-	fmt.Println("2025/day/6 pt2", solvePt2(util.ReadLinesNoTrim("./2025/day6/input1.txt")))
+	fmt.Println("2025/day/6 pt1", solvePt1(util.ReadLines("./2025/day6/input.txt")))
+	fmt.Println("2025/day/6 pt2", solvePt2(util.ReadLinesNoTrim("./2025/day6/input.txt")))
 }
 
 // solvePt2 solves part 1 of the puzzle
