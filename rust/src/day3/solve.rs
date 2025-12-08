@@ -1,6 +1,4 @@
-use crate::util::read::file;
-pub fn run(size: u32, filename: String) -> u128 {
-    let input = file(filename).expect("Failed to read input file");
+pub fn run(size: u32, input: String) -> u128 {
     let mut result: u128 = 0;
     for line in input.lines() {
         let mut bank: Vec<u32> = line.chars().filter_map(|c| c.to_digit(10)).collect();
