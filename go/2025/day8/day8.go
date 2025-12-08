@@ -91,7 +91,7 @@ func solvePt1(lines []string, conn int) int {
 	// current circuit
 	cir := 1 // zero means no circuit
 	circuits := make(map[int]*circuit, 0)
-	for _ = range conn {
+	for range conn {
 		d := heap.Pop(&h).(distance)
 		// fmt.Println("considering distance", d.d, "between", *d.p1, "and", *d.p2)
 		if d.p1.circuit == 0 && d.p2.circuit == 0 {
@@ -151,7 +151,8 @@ func solvePt1(lines []string, conn int) int {
 }
 
 // solvePt2 solves part 1 of the puzzle
-// finds number of junctions in the 3 largest circuits formed by connecting points
+// finds the distance of the last connection that completes the circuit
+// then multiplies the X coordinates of those two junction boxes
 func solvePt2(lines []string) int {
 	points := make([]*pos, len(lines))
 	// parse input O(n)
