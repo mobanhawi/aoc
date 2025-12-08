@@ -1,4 +1,4 @@
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use criterion::{Criterion, black_box, criterion_group, criterion_main};
 use rust::day3::solve;
 
 fn benchmark_pt1(c: &mut Criterion) {
