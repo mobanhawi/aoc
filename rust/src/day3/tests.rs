@@ -8,7 +8,10 @@ mod tests {
 
     #[test]
     fn test_simple_pt2() {
-        assert_eq!(solve::run(12, String::from("src/day3/input0.txt")), 3121910778619);
+        assert_eq!(
+            solve::run(12, String::from("src/day3/input0.txt")),
+            3121910778619
+        );
     }
 
     #[test]
@@ -18,6 +21,9 @@ mod tests {
 
     #[test]
     fn test_pt2() {
-        assert_eq!(solve::run(12, String::from("src/day3/input.txt")), 172162399742349);
+        assert_eq!(
+            solve::run(12, String::from("src/day3/input.txt")),
+            172162399742349
+        );
     }
 }
