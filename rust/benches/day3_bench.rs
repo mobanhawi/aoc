@@ -1,7 +1,7 @@
+use aoc::day3::solve;
+use aoc::util::read::file;
 use criterion::{Criterion, black_box, criterion_group, criterion_main};
 use once_cell::sync::Lazy;
-use rust::day3::solve;
-use rust::util::read::file;
 static INPUT: Lazy<String> = Lazy::new(|| file(String::from("src/day3/input.txt")).unwrap());
 
 /// day3 pt1                time:   [347.16 µs 347.82 µs 348.55 µs]
