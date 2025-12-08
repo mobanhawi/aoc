@@ -1,5 +1,5 @@
 use crate::util::read::file;
-pub fn run(size: u32, filename: String) {
+pub fn run(size: u32, filename: String) -> u128 {
     let input = file(filename).
         expect("Failed to read input file");
     let mut result: u128 = 0;
@@ -30,5 +30,5 @@ pub fn run(size: u32, filename: String) {
             result += bank[i] as u128 *base.pow(size-1-i as u32);
         }
     }
-    println!("Result: {}", result);
+    result
 }
