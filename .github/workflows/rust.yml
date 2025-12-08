@@ -1,4 +1,4 @@
-name: Test & Benchmark
+name: Test & Benchmark 🦀
 on: [push]
 
 jobs:
