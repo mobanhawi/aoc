@@ -12,10 +12,10 @@ var (
 )
 
 func Test_solvePt1(t *testing.T) {
-	want0 := 21
-	want1 := 1675
-	got1 := solvePt1(lines, false)
-	got0 := solvePt1(lines0, false)
+	want0 := 40
+	want1 := 131580
+	got1 := solvePt1(lines, 1000)
+	got0 := solvePt1(lines0, 10)
 
 	if got0 != want0 {
 		t.Errorf("Test solvePt1 wanted %v got %v", want0, got0)
@@ -26,8 +26,8 @@ func Test_solvePt1(t *testing.T) {
 }
 
 func Test_solvePt2(t *testing.T) {
-	want0 := 40
-	want1 := 187987920774390
+	want0 := 25272
+	want1 := 6844224
 	got1 := solvePt2(lines)
 	got0 := solvePt2(lines0)
 
