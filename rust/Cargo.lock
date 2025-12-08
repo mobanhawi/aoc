@@ -358,7 +358,7 @@ name = "rust"
 version = "0.1.0"
 dependencies = [
  "criterion",
-    "once_cell",
+ "once_cell",
 ]
 
 [[package]]
