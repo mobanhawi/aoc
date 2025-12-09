@@ -27,8 +27,8 @@ checksum = "5192cca8006f1fd4f7237516f40fa183bb07f8fbdfedaa0036de5ea9b0b45e78"
 name = "aoc"
 version = "0.1.0"
 dependencies = [
-    "criterion",
-    "once_cell",
+ "criterion",
+ "once_cell",
 ]
 
 [[package]]
