@@ -38,8 +38,8 @@ impl PartialOrd for Circuit {
 
 fn euclidean_distance(v1: &[i64], v2: &[i64]) -> i64 {
     let dx = v1[0] - v2[0];
-    let dy = v1[0] - v2[0];
-    let dz = v1[0] - v2[0];
+    let dy = v1[1] - v2[1];
+    let dz = v1[2] - v2[2];
     dx * dx + dy * dy + dz * dz
 }
 
@@ -58,58 +58,59 @@ pub fn run_pt1(n: u32, input: &String) -> u128 {
             heap.push(distance);
         }
     }
-    let mut connection: usize = 0;
+    let mut c_key: usize = 0;
     let mut circuits: HashMap<usize, Circuit> = HashMap::new();
+    let mut pt_to_circuit: HashMap<usize, usize> = HashMap::new();
     for _ in 0..n {
         if let Some(distance) = heap.pop() {
             let p1 = distance.p1;
             let p2 = distance.p2;
-            let mut c1: Option<usize> = None;
-            let mut c2: Option<usize> = None;
-            for (key, circuit) in &circuits {
-                if circuit.points.contains(&positions[p1]) {
-                    c1 = Some(*key);
-                }
-                if circuit.points.contains(&positions[p2]) {
-                    c2 = Some(*key);
-                }
-            }
+            let c1 = pt_to_circuit.get(&p1).cloned();
+            let c2 = pt_to_circuit.get(&p2).cloned();
+            println!(
+                "Distance between point {:?} and {:?}: {}",
+                positions[p1], positions[p2], distance.dist
+            );
+
             match (c1, c2) {
-                // merge circuits
+                // merge circuit c2 into c1
                 (Some(c1_key), Some(c2_key)) => {
                     if c1_key != c2_key {
                         let mut c2_points = circuits.get(&c2_key).unwrap().points.clone();
-                        let c2_connections = circuits.get(&c2_key).unwrap().connections;
                         let c1_circuit = circuits.get_mut(&c1_key).unwrap();
                         c1_circuit.points.extend(c2_points.drain());
-                        c1_circuit.connections += c2_connections + 1;
+                        c1_circuit.connections = c1_circuit.points.len();
                         circuits.remove(&c2_key);
-                    } else {
-                        circuits.get_mut(&c1_key).unwrap().connections += 1;
+                        pt_to_circuit.insert(p2, c1_key);
                     }
                 }
-                // Add point to existing circuit
+                // Add point(p2) to existing circuit(c1)
                 (Some(c1_key), None) => {
                     let c1_circuit = circuits.get_mut(&c1_key).unwrap();
                     c1_circuit.points.insert(positions[p2].clone());
+                    pt_to_circuit.insert(p2, c1_key);
                     c1_circuit.connections += 1;
                 }
-                // Add point to existing circuit
+                // Add point(p1) to existing circuit(c2)
                 (None, Some(c2_key)) => {
                     let c2_circuit = circuits.get_mut(&c2_key).unwrap();
                     c2_circuit.points.insert(positions[p1].clone());
                     c2_circuit.connections += 1;
+                    pt_to_circuit.insert(p1, c2_key);
                 }
                 // Create new circuit
                 (None, None) => {
-                    let mut points: HashSet<Vec<i64>> = HashSet::new();
-                    points.insert(positions[p1].clone());
-                    points.insert(positions[p2].clone());
+                    c_key += 1;
+                    let mut ps: HashSet<Vec<i64>> = HashSet::new();
+                    ps.insert(positions[p1].clone());
+                    ps.insert(positions[p2].clone());
                     let circuit = Circuit {
-                        points,
-                        connections: 1,
+                        points: ps.clone(),
+                        connections: 2,
                     };
-                    circuits.insert(connection, circuit);
+                    circuits.insert(c_key, circuit);
+                    pt_to_circuit.insert(p1, c_key);
+                    pt_to_circuit.insert(p2, c_key);
                 }
             }
         }
