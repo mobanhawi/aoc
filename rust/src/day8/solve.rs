@@ -1,9 +1,9 @@
 use std::collections::{BinaryHeap, HashMap, HashSet};
 #[derive(PartialEq, Eq)]
 struct Distance {
-    dist: i64,
-    p1: usize,
-    p2: usize,
+    dist: i64, // euclidean distance squared between p1 and p2
+    p1: usize, // index of point 1
+    p2: usize, // index of point 2
 }
 // Implement Ord and PartialOrd for Distance to make it work with BinaryHeap
 // see: https://stackoverflow.com/questions/76249349/rust-binary-heap-or-priority-queue-on-struct-with-2-ways-to-order
@@ -21,8 +21,8 @@ impl PartialOrd for Distance {
 
 #[derive(PartialEq, Eq)]
 struct Circuit {
-    points: HashSet<Vec<i64>>,
-    connections: usize,
+    points: HashSet<usize>, // indexes of points in the circuit
+    connections: usize,     // number of connections in the circuit
 }
 
 impl Ord for Circuit {
@@ -59,7 +59,9 @@ pub fn run_pt1(n: u32, input: &String) -> u128 {
         }
     }
     let mut c_key: usize = 0;
+    // Circuits storage c_key to Circuit
     let mut circuits: HashMap<usize, Circuit> = HashMap::new();
+    // Point index to circuit key
     let mut pt_to_circuit: HashMap<usize, usize> = HashMap::new();
     for _ in 0..n {
         if let Some(distance) = heap.pop() {
@@ -67,43 +69,55 @@ pub fn run_pt1(n: u32, input: &String) -> u128 {
             let p2 = distance.p2;
             let c1 = pt_to_circuit.get(&p1).cloned();
             let c2 = pt_to_circuit.get(&p2).cloned();
-            println!(
-                "Distance between point {:?} and {:?}: {}",
-                positions[p1], positions[p2], distance.dist
-            );
+            // println!(
+            //     "Distance between point {:?} and {:?}: {}",
+            //     positions[p1], positions[p2], distance.dist
+            // );
 
             match (c1, c2) {
                 // merge circuit c2 into c1
                 (Some(c1_key), Some(c2_key)) => {
                     if c1_key != c2_key {
                         let mut c2_points = circuits.get(&c2_key).unwrap().points.clone();
-                        let c1_circuit = circuits.get_mut(&c1_key).unwrap();
-                        c1_circuit.points.extend(c2_points.drain());
+                        let c1_circuit = match circuits.get_mut(&c1_key) {
+                            None => {
+                                panic!(
+                                    "Circuit {} not found keys:{:?}",
+                                    c1_key,
+                                    circuits.keys().collect::<Vec<&usize>>()
+                                );
+                            }
+                            Some(_) => circuits.get_mut(&c1_key).unwrap(),
+                        };
+                        c1_circuit.points.extend(c2_points.iter());
                         c1_circuit.connections = c1_circuit.points.len();
                         circuits.remove(&c2_key);
-                        pt_to_circuit.insert(p2, c1_key);
+                        // Update point to circuit mapping
+                        for c in c2_points.drain() {
+                            pt_to_circuit.insert(c, c1_key);
+                        }
                     }
                 }
                 // Add point(p2) to existing circuit(c1)
                 (Some(c1_key), None) => {
                     let c1_circuit = circuits.get_mut(&c1_key).unwrap();
-                    c1_circuit.points.insert(positions[p2].clone());
+                    c1_circuit.points.insert(p2);
                     pt_to_circuit.insert(p2, c1_key);
                     c1_circuit.connections += 1;
                 }
                 // Add point(p1) to existing circuit(c2)
                 (None, Some(c2_key)) => {
                     let c2_circuit = circuits.get_mut(&c2_key).unwrap();
-                    c2_circuit.points.insert(positions[p1].clone());
+                    c2_circuit.points.insert(p1);
                     c2_circuit.connections += 1;
                     pt_to_circuit.insert(p1, c2_key);
                 }
                 // Create new circuit
                 (None, None) => {
-                    c_key += 1;
-                    let mut ps: HashSet<Vec<i64>> = HashSet::new();
-                    ps.insert(positions[p1].clone());
-                    ps.insert(positions[p2].clone());
+                    c_key += 1; // New circuit key
+                    let mut ps: HashSet<usize> = HashSet::new();
+                    ps.insert(p1);
+                    ps.insert(p2);
                     let circuit = Circuit {
                         points: ps.clone(),
                         connections: 2,
@@ -120,7 +134,6 @@ pub fn run_pt1(n: u32, input: &String) -> u128 {
     c.sort_by(|a, b| b.cmp(a)); // Sorts in descend
     let mut result: u128 = 1;
     for i in 0..3 {
-        println!("Circuit {}: {} connections", i + 1, c[i].connections);
         result *= c[i].connections as u128;
     }
     result
