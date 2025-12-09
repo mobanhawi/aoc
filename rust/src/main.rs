@@ -4,4 +4,5 @@ pub mod util;
 
 fn main() {
     day3::solve();
+    day8::solve();
 }
