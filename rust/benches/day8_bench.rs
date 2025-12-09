@@ -10,5 +10,11 @@ fn benchmark_pt1(c: &mut Criterion) {
         b.iter(|| solve::run_pt1(black_box(1000), black_box(&INPUT.clone())))
     });
 }
-criterion_group!(benches, benchmark_pt1);
+/// day8 pt2                time:   [11.677 ms 11.948 ms 12.241 ms]
+fn benchmark_pt2(c: &mut Criterion) {
+    c.bench_function("day8 pt2", |b| {
+        b.iter(|| solve::run_pt2(black_box(1000), black_box(&INPUT.clone())))
+    });
+}
+criterion_group!(benches, benchmark_pt1, benchmark_pt2);
 criterion_main!(benches);

@@ -10,19 +10,19 @@ mod tests {
     fn test_run_pt1_simple() {
         assert_eq!(solve::run_pt1(10, &INPUT0.clone()), 40);
     }
-    //
-    // #[test]
-    // // fn test_simple_pt2() {
-    // //     assert_eq!(solve::run(12, &INPUT0.clone()), 3121910778619);
-    // // }
-    //
+
+    #[test]
+    fn test_simple_pt2() {
+        assert_eq!(solve::run_pt2(12, &INPUT0.clone()), 25272);
+    }
+
     #[test]
     fn test_pt1() {
         assert_eq!(solve::run_pt1(1000, &INPUT.clone()), 131580);
     }
-    //
-    // #[test]
-    // // fn test_pt2() {
-    // //     assert_eq!(solve::run(12, &INPUT.clone()), 172162399742349);
-    // // }
+
+    #[test]
+    fn test_pt2() {
+        assert_eq!(solve::run_pt2(12, &INPUT.clone()), 6844224);
+    }
 }
