@@ -26,8 +26,8 @@ func Test_solvePt1(t *testing.T) {
 }
 
 func Test_solvePt2(t *testing.T) {
-	want0 := 0
-	want1 := 0
+	want0 := 24
+	want1 := 1554370486
 	got1 := solvePt2(lines)
 	got0 := solvePt2(lines0)
 

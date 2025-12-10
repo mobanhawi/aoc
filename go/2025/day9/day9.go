@@ -73,8 +73,3 @@ func solvePt1(lines []string) int {
 	d := heap.Pop(&h).(*metric)
 	return (util.Abs(tiles[d.p1][0]-tiles[d.p2][0]) + 1) * (util.Abs(tiles[d.p1][1]-tiles[d.p2][1]) + 1)
 }
-
-// solvePt2 solves part 2 of the puzzle
-func solvePt2(lines []string) int {
-	return 0
-}

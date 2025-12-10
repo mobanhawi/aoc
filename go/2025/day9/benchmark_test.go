@@ -10,12 +10,12 @@ var l = util.ReadLines("input.txt")
 
 // goos: darwin
 // goarch: arm64
-// pkg: github.com/mobanhawi/aoc/2025/day8
+// pkg: github.com/mobanhawi/aoc/2025/day9
 // cpu: Apple M1 Pro
 // BenchmarkSolutionPt2
-// BenchmarkSolutionPt2-8   	      25	  45465247 ns/op
+// BenchmarkSolutionPt2-8   	      55	  21025236 ns/op
 // BenchmarkSolutionPt1
-// BenchmarkSolutionPt1-8   	      27	  41038557 ns/op
+// BenchmarkSolutionPt1-8   	     190	   6222427 ns/op
 func BenchmarkSolutionPt2(t *testing.B) {
 	for t.Loop() {
 		solvePt2(l)
