@@ -41,8 +41,8 @@ func (h *metricHeap) Pop() any {
 	return x
 }
 
-// area formed rectangle defined by two points
-func area(p1, p2 []int) int {
+// dist diagonal squared distance between two points (proxy for area)
+func dist(p1, p2 []int) int {
 	dx := p1[0] - p2[0]
 	dy := p1[1] - p2[1]
 	return dx*dx + dy*dy
@@ -65,7 +65,7 @@ func solvePt1(lines []string) int {
 		for j := i + 1; j < n; j++ {
 			d := metric{
 				p1: i, p2: j,
-				d: area(tiles[i], tiles[j]),
+				d: dist(tiles[i], tiles[j]),
 			}
 			heap.Push(&h, &d)
 		}
