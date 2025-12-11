@@ -52,10 +52,10 @@ func solvePt1(lines []string) int {
 		}
 		startJolts := slices.Index(r, '{')
 		switches := parseSwitches(line[endTarget+2:startJolts+2], bitWidth)
-		fmt.Println("targets:", target)
-		fmt.Println("switches:", switches)
+		//fmt.Println("targets:", target)
+		//fmt.Println("switches:", switches)
 		var currentPos Vector = 0
-		l := list.New()
+		l := list.New() // BFS queue
 		l.PushBack(State{Position: currentPos, Count: 0})
 		visited := util.NewSet[Vector]()
 		count := 0
@@ -65,11 +65,11 @@ func solvePt1(lines []string) int {
 			currentPos = state.Position
 			count = state.Count
 			if currentPos == target {
-				fmt.Println("Reached target:", target, "in", count, "switches")
+				//fmt.Println("Reached target:", target, "in", count, "switches")
 				total += count
 				break
 			}
-			if visited.Contains(currentPos) {
+			if visited.Contains(currentPos) { // stop getting stuck in loops
 				continue
 			}
 			visited.Add(currentPos)
