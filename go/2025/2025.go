@@ -2,6 +2,7 @@ package _025
 
 import (
 	"github.com/mobanhawi/aoc/2025/day1"
+	"github.com/mobanhawi/aoc/2025/day10"
 	"github.com/mobanhawi/aoc/2025/day2"
 	"github.com/mobanhawi/aoc/2025/day3"
 	"github.com/mobanhawi/aoc/2025/day4"
@@ -22,4 +23,5 @@ func Solve() {
 	day7.Solve()
 	day8.Solve()
 	day9.Solve()
+	day10.Solve()
 }
