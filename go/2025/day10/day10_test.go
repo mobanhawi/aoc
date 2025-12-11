@@ -1,4 +1,4 @@
-package day9
+package day10
 
 import (
 	"testing"
@@ -12,9 +12,9 @@ var (
 )
 
 func Test_solvePt1(t *testing.T) {
-	want0 := 0
-	want1 := 0
-	got1 := 0 // solvePt1(lines)
+	want0 := 7
+	want1 := 457
+	got1 := solvePt1(lines)
 	got0 := solvePt1(lines0)
 
 	if got0 != want0 {
