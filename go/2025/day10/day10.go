@@ -2,6 +2,7 @@ package day9
 
 import (
 	"fmt"
+	"math/bits"
 	"regexp"
 	"slices"
 	"strconv"
@@ -17,66 +18,54 @@ func Solve() {
 	fmt.Println("2025/day/9 pt2", solvePt2(util.ReadLines("./2025/day10/input.txt")))
 }
 
-type Vector []int
+type Vector uint
 
 // Distance computes the Manhattan distance between two vectors
 func (v Vector) Distance(o Vector) int {
-	r := 0
-	for i := range len(v) {
-		r += v[i] - o[i]
-	}
-	return r
+	// Count the number of differing bits by XORing and counting set bits
+	//fmt.Println("v:", v, "o:", o, "v^o:", v^o)
+	return bits.OnesCount(uint(v ^ o))
 }
 
-// dist manhattan distance between two points
-func dist(p1, p2 []int) int {
-	d := 0
-	for i := range p1 {
-		d += util.Abs(p1[i] - p2[i])
-	}
-	return d
+func (v Vector) String() string {
+	return fmt.Sprintf("%b", v)
 }
 
 // solvePt1 solves part 1 of the puzzle
-func solvePt1(lines []string) int {
+func solvePt1(lines []string) (switchCount int) {
+	// count number of presses to reach target
+	switchCount = 0
 	for _, line := range lines {
 		r := []rune(line)
 		startTarget := slices.Index(r, '[')
 		endTarget := slices.Index(r, ']')
-		target := make(Vector, endTarget-startTarget-1)
+		var target Vector = 0
 		for i := startTarget + 1; i < endTarget; i++ {
 			if r[i] == '#' {
-				target[i-startTarget-1] = 1
+				target = target | (1 << (i - startTarget - 1))
 			}
 		}
 		startJolts := slices.Index(r, '{')
 		switches := parseSwitches(line[endTarget+2 : startJolts+2])
 		fmt.Println("targets:", target)
 		fmt.Println("switches:", switches)
-		start := make([]int, len(target))
-		count := 0
+		var currentPos Vector = 0
 		minDist := -1
-		for target.Distance(start) == 0 {
+		for target.Distance(currentPos) > 0 {
+			//fmt.Println("currentPos:", currentPos, "target:", target, "distance:", target.Distance(currentPos))
 			for _, sw := range switches {
-				newPos := make(Vector, len(start))
-				for i := range start {
-					if count%2 == 0 {
-
-					}
-					newPos[i] = start[i] + sw[i]
-				}
-				dist := target.Distance(newPos)
-				if minDist == -1 || dist < minDist {
-					minDist = dist
-					start = newPos
+				newPos := currentPos ^ sw // toggle switch using XOR
+				//fmt.Println("currentPos:", currentPos, "trying switch:", sw, "newPos:", newPos)
+				d := target.Distance(newPos)
+				if minDist == -1 || d < minDist {
+					minDist = d
+					currentPos = newPos
+					switchCount++ // count this switch press
 				}
 			}
-			count++
-
 		}
-
 	}
-	return 0
+	return
 }
 
 func solvePt2(lines []string) int {
@@ -95,34 +84,16 @@ func parseSwitches(line string) []Vector {
 	result := make([]Vector, 0, len(matches))
 
 	for _, match := range matches {
-		indices := make(Vector, 0, 2)
-		maxIdx := 0
-
+		var v Vector = 0
 		// First number is always present
 		idx1, _ := strconv.Atoi(match[1])
-		indices = append(indices, idx1)
-		if idx1 > maxIdx {
-			maxIdx = idx1
-		}
-
+		v = v | (1 << idx1)
 		// Check if there's a second number (pair)
 		if match[2] != "" {
 			idx2, _ := strconv.Atoi(match[2])
-			indices = append(indices, idx2)
-			if idx2 > maxIdx {
-				maxIdx = idx2
-			}
+			v = v | (1 << idx2)
 		}
-
-		// Create array with all zeros
-		arr := make([]int, maxIdx+1)
-
-		// Set specified indices to 1
-		for _, idx := range indices {
-			arr[idx] = 1
-		}
-
-		result = append(result, arr)
+		result = append(result, v)
 	}
 
 	return result
