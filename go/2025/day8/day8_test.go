@@ -12,29 +12,35 @@ var (
 )
 
 func Test_solvePt1(t *testing.T) {
-	want0 := 40
-	want1 := 131580
-	got1 := solvePt1(lines, 1000)
-	got0 := solvePt1(lines0, 10)
-
-	if got0 != want0 {
-		t.Errorf("Test solvePt1 wanted %v got %v", want0, got0)
-	}
-	if got1 != want1 {
-		t.Errorf("Test solvePt1 wanted %v got %v", want1, got1)
-	}
+	t.Run("input0.txt", func(t *testing.T) {
+		want := 40
+		got := solvePt1(lines0, 10)
+		if got != want {
+			t.Errorf("Test solvePt1 wanted %v got %v", want, got)
+		}
+	})
+	t.Run("input.txt", func(t *testing.T) {
+		want := 131580
+		got := solvePt1(lines, 1000)
+		if got != want {
+			t.Errorf("Test solvePt1 wanted %v got %v", want, got)
+		}
+	})
 }
 
 func Test_solvePt2(t *testing.T) {
-	want0 := 25272
-	want1 := 6844224
-	got1 := solvePt2(lines)
-	got0 := solvePt2(lines0)
-
-	if got0 != want0 {
-		t.Errorf("Test solvePt2 wanted %v got %v", want0, got0)
-	}
-	if got1 != want1 {
-		t.Errorf("Test solvePt2 wanted %v got %v", want1, got1)
-	}
+	t.Run("input0.txt", func(t *testing.T) {
+		want := 25272
+		got := solvePt2(lines0)
+		if got != want {
+			t.Errorf("Test solvePt2 wanted %v got %v", want, got)
+		}
+	})
+	t.Run("input.txt", func(t *testing.T) {
+		want := 6844224
+		got := solvePt2(lines)
+		if got != want {
+			t.Errorf("Test solvePt2 wanted %v got %v", want, got)
+		}
+	})
 }

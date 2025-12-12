@@ -6,17 +6,24 @@ import (
 	"github.com/mobanhawi/aoc/2025/util"
 )
 
-func Test_solve(t *testing.T) {
-	lines := util.ReadLines("input.txt")
-	want1 := 4449991244405
-	want2 := 9348430857627
-	got1 := solvePt1(lines)
-	got2 := solvePt2(util.ReadLinesNoTrim("input.txt"))
+func Test_solvePt1(t *testing.T) {
+	t.Run("input.txt", func(t *testing.T) {
+		lines := util.ReadLines("input.txt")
+		want := 4449991244405
+		got := solvePt1(lines)
+		if got != want {
+			t.Errorf("Test solvePt1 wanted %v got %v", want, got)
+		}
+	})
+}
 
-	if got1 != want1 {
-		t.Errorf("Test solvePt1 wanted %v got %v", want1, got1)
-	}
-	if got2 != want2 {
-		t.Errorf("Test solvePt2 wanted %v got %v", want2, got2)
-	}
+func Test_solvePt2(t *testing.T) {
+	t.Run("input.txt", func(t *testing.T) {
+		lines := util.ReadLinesNoTrim("input.txt")
+		want := 9348430857627
+		got := solvePt2(lines)
+		if got != want {
+			t.Errorf("Test solvePt2 wanted %v got %v", want, got)
+		}
+	})
 }

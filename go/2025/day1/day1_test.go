@@ -7,9 +7,11 @@ import (
 )
 
 func Test_solve(t *testing.T) {
-	want := 5887
-	got := solve(util.ReadLines("input.txt"), 50)
-	if got != want {
-		t.Errorf("Test solve wanted %v got %v", want, got)
-	}
+	t.Run("input.txt", func(t *testing.T) {
+		want := 5887
+		got := solve(util.ReadLines("input.txt"), 50)
+		if got != want {
+			t.Errorf("Test solve wanted %v got %v", want, got)
+		}
+	})
 }

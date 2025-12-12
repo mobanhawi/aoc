@@ -13,31 +13,42 @@ func NewSet[T comparable]() *Set[T] {
 }
 
 // Add inserts an element into the set
-func (s *Set[T]) Add(value T) {
+func (s Set[T]) Add(value T) {
 	s.elements[value] = struct{}{}
 }
 
 // Remove deletes an element from the set
-func (s *Set[T]) Remove(value T) {
+func (s Set[T]) Remove(value T) {
 	delete(s.elements, value)
 }
 
 // Contains checks if an element is in the set
-func (s *Set[T]) Contains(value T) bool {
+func (s Set[T]) Contains(value T) bool {
 	_, found := s.elements[value]
 	return found
 }
 
 // Size returns the number of elements in the set
-func (s *Set[T]) Size() int {
+func (s Set[T]) Size() int {
 	return len(s.elements)
 }
 
 // List returns all elements in the set as a slice
-func (s *Set[T]) List() []T {
+func (s Set[T]) List() []T {
 	keys := make([]T, 0, len(s.elements))
 	for key := range s.elements {
 		keys = append(keys, key)
 	}
 	return keys
+}
+
+func (s Set[T]) Union(other Set[T]) Set[T] {
+	result := NewSet[T]()
+	for key := range s.elements {
+		result.Add(key)
+	}
+	for key := range other.elements {
+		result.Add(key)
+	}
+	return *result
 }
