@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/mobanhawi/aoc/2025/util"
+	"github.com/mobanhawi/aoc/util"
 )
 
 /*
@@ -66,15 +66,14 @@ func solvePt1(lines []string) int {
 
 // cacheKey represents a DFS state for memoization
 type cacheKey struct {
-	nodeIdx  int
-	pathMask uint64
+	nodeId           string
+	importantVisited uint8 // bit 0 = fft, bit 1 = dac
 }
 
 // solvePt2 solves part 2 of the puzzle
-// finds all paths from 'you' to 'out' that visit 'fft' or 'dac'
+// finds all paths from 'svr' to 'out' that visit 'fft' or 'dac'
 func solvePt2(lines []string) int {
-	// build graph
-	// map from -> to
+	// build directed graph
 	g := Graph{Nodes: make(map[string]Node)}
 	for _, line := range lines {
 		before, after, _ := strings.Cut(line, ":")
@@ -88,41 +87,29 @@ func solvePt2(lines []string) int {
 		g.Nodes[from] = node
 	}
 
-	// Build node ID -> bit index mapping
-	nodeToIdx := make(map[string]int)
-	idxToNode := make([]string, 0, len(g.Nodes))
-	idx := 0
-	for nodeId := range g.Nodes {
-		nodeToIdx[nodeId] = idx
-		idxToNode = append(idxToNode, nodeId)
-		idx++
-	}
-
-	// Special nodes we need to check
-	fftIdx := nodeToIdx["fft"]
-	dacIdx := nodeToIdx["dac"]
-	fftMask := uint64(1) << fftIdx
-	dacMask := uint64(1) << dacIdx
+	// Bit masks for nodes we are tracking
+	fftBit := uint8(1 << 0)
+	dacBit := uint8(1 << 1)
 
 	visited := make(map[string]bool)
 	cache := make(map[cacheKey]int)
 
-	var dfs func(nodeId string, pathMask uint64) int
-	dfs = func(nodeId string, pathMask uint64) int {
-		nodeIdx := nodeToIdx[nodeId]
-		key := cacheKey{nodeIdx: nodeIdx, pathMask: pathMask}
-
+	var dfs func(nodeId string, importantVisited uint8) int
+	dfs = func(nodeId string, importantVisited uint8) int {
+		key := cacheKey{nodeId: nodeId, importantVisited: importantVisited}
 		if cached, ok := cache[key]; ok {
-			fmt.Println("Using cached value for", key, ":", cached)
 			return cached
 		}
-
-		nodeMask := uint64(1) << nodeIdx
-		pathMask |= nodeMask
+		if nodeId == "fft" {
+			importantVisited |= fftBit
+		} else if nodeId == "dac" {
+			importantVisited |= dacBit
+		}
 
 		if nodeId == "out" {
 			result := 0
-			if (pathMask&fftMask != 0) && (pathMask&dacMask != 0) {
+			// Only count paths that visited both fft AND dac
+			if (importantVisited&fftBit != 0) && (importantVisited&dacBit != 0) {
 				result = 1
 			}
 			cache[key] = result
@@ -133,7 +120,7 @@ func solvePt2(lines []string) int {
 		totalPaths := 0
 		for _, neighborId := range g.Nodes[nodeId].Edges {
 			if !visited[neighborId] {
-				totalPaths += dfs(neighborId, pathMask)
+				totalPaths += dfs(neighborId, importantVisited)
 			}
 		}
 		visited[nodeId] = false

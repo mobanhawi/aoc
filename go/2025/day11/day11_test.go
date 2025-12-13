@@ -3,7 +3,7 @@ package day11
 import (
 	"testing"
 
-	"github.com/mobanhawi/aoc/2025/util"
+	"github.com/mobanhawi/aoc/util"
 )
 
 var (
@@ -37,11 +37,11 @@ func Test_solvePt2(t *testing.T) {
 			t.Errorf("Test solvePt2 wanted %v got %v", want, got)
 		}
 	})
-	//t.Run("input.txt", func(t *testing.T) {
-	//	want := 0
-	//	got := solvePt2(lines)
-	//	if got != want {
-	//		t.Errorf("Test solvePt2 wanted %v got %v", want, got)
-	//	}
-	//})
+	t.Run("input.txt", func(t *testing.T) {
+		want := 294053029111296
+		got := solvePt2(lines)
+		if got != want {
+			t.Errorf("Test solvePt2 wanted %v got %v", want, got)
+		}
+	})
 }
