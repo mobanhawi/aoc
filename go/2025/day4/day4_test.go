@@ -3,7 +3,7 @@ package day4
 import (
 	"testing"
 
-	"github.com/mobanhawi/aoc/2025/util"
+	"github.com/mobanhawi/aoc/util"
 )
 
 func Test_solve(t *testing.T) {

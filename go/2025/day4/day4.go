@@ -3,7 +3,7 @@ package day4
 import (
 	"fmt"
 
-	"github.com/mobanhawi/aoc/2025/util"
+	"github.com/mobanhawi/aoc/util"
 )
 
 /*

@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/mobanhawi/aoc/2025/util"
+	util2 "github.com/mobanhawi/aoc/util"
 )
 
 type Edge struct {
@@ -13,8 +13,8 @@ type Edge struct {
 
 func intersections(minX, minY, maxX, maxY int, edges []*Edge) bool {
 	for _, e := range edges {
-		ex1, ex2 := util.Sort(e.x1, e.x2)
-		ey1, ey2 := util.Sort(e.y1, e.y2)
+		ex1, ex2 := util2.Sort(e.x1, e.x2)
+		ey1, ey2 := util2.Sort(e.y1, e.y2)
 		if minX < ex2 && maxX > ex1 && minY < ey2 && maxY > ey1 {
 			return true
 		}
@@ -23,8 +23,8 @@ func intersections(minX, minY, maxX, maxY int, edges []*Edge) bool {
 }
 
 func area(x1, y1, x2, y2 int) int {
-	width := util.Abs(x2-x1) + 1
-	height := util.Abs(y2-y1) + 1
+	width := util2.Abs(x2-x1) + 1
+	height := util2.Abs(y2-y1) + 1
 	return width * height
 }
 
@@ -56,8 +56,8 @@ func solvePt2(lines []string) (result int) {
 		for t := f; t < len(tiles); t++ {
 			fromTile := tiles[f]
 			toTile := tiles[t]
-			minX, maxX := util.Sort(fromTile[0], toTile[0])
-			minY, maxY := util.Sort(fromTile[1], toTile[1])
+			minX, maxX := util2.Sort(fromTile[0], toTile[0])
+			minY, maxY := util2.Sort(fromTile[1], toTile[1])
 			if dist(fromTile, toTile) > result {
 				if !intersections(minX, minY, maxX, maxY, edges) {
 					area := area(fromTile[0], fromTile[1], toTile[0], toTile[1])

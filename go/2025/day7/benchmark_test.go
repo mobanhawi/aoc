@@ -3,7 +3,7 @@ package day7
 import (
 	"testing"
 
-	"github.com/mobanhawi/aoc/2025/util"
+	"github.com/mobanhawi/aoc/util"
 )
 
 var l = util.ReadLines("input.txt")

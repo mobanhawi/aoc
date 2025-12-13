@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"math"
 
-	"github.com/mobanhawi/aoc/2025/util"
+	"github.com/mobanhawi/aoc/util"
 )
 
 /*

@@ -4,15 +4,15 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/mobanhawi/aoc/2025/util"
+	util2 "github.com/mobanhawi/aoc/util"
 )
 
 /*
 Solve https://adventofcode.com/2025/day/6
 */
 func Solve() {
-	fmt.Println("2025/day/7 pt1", solvePt1(util.ReadLines("./2025/day7/input.txt"), false))
-	fmt.Println("2025/day/7 pt2", solvePt2(util.ReadLines("./2025/day7/input.txt")))
+	fmt.Println("2025/day/7 pt1", solvePt1(util2.ReadLines("./2025/day7/input.txt"), false))
+	fmt.Println("2025/day/7 pt2", solvePt2(util2.ReadLines("./2025/day7/input.txt")))
 }
 
 func solvePt2(lines []string) int {
@@ -53,9 +53,9 @@ func solvePt1(lines []string, debug bool) int {
 	startCol := strings.Index(lines[0], "S")
 	splitCount := 0
 	// record beam positions per row
-	beamPos := make(map[int]*util.Set[int])
+	beamPos := make(map[int]*util2.Set[int])
 	for r := range rows {
-		beamPos[r] = util.NewSet[int]()
+		beamPos[r] = util2.NewSet[int]()
 		if r == 0 { // starting row only
 			beamPos[r].Add(startCol)
 			continue
@@ -85,7 +85,7 @@ func solvePt1(lines []string, debug bool) int {
 	return splitCount
 }
 
-func displayGrid(lines []string, beamPos map[int]*util.Set[int]) {
+func displayGrid(lines []string, beamPos map[int]*util2.Set[int]) {
 	for r, line := range lines {
 		rowChars := []rune(line)
 		for _, col := range beamPos[r].List() {

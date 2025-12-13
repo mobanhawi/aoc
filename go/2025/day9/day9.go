@@ -6,15 +6,15 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/mobanhawi/aoc/2025/util"
+	util2 "github.com/mobanhawi/aoc/util"
 )
 
 /*
 Solve https://adventofcode.com/2025/day/9
 */
 func Solve() {
-	fmt.Println("2025/day/9 pt1", solvePt1(util.ReadLines("./2025/day9/input.txt")))
-	fmt.Println("2025/day/9 pt2", solvePt2(util.ReadLines("./2025/day9/input.txt")))
+	fmt.Println("2025/day/9 pt1", solvePt1(util2.ReadLines("./2025/day9/input.txt")))
+	fmt.Println("2025/day/9 pt2", solvePt2(util2.ReadLines("./2025/day9/input.txt")))
 }
 
 type metric struct {
@@ -71,5 +71,5 @@ func solvePt1(lines []string) int {
 		}
 	}
 	d := heap.Pop(&h).(*metric)
-	return (util.Abs(tiles[d.p1][0]-tiles[d.p2][0]) + 1) * (util.Abs(tiles[d.p1][1]-tiles[d.p2][1]) + 1)
+	return (util2.Abs(tiles[d.p1][0]-tiles[d.p2][0]) + 1) * (util2.Abs(tiles[d.p1][1]-tiles[d.p2][1]) + 1)
 }

@@ -11,14 +11,14 @@ import (
 
 	"gonum.org/v1/gonum/mat"
 
-	"github.com/mobanhawi/aoc/2025/util"
+	util2 "github.com/mobanhawi/aoc/util"
 )
 
 /*
 Solve https://adventofcode.com/2025/day/10
 */
 func Solve() {
-	fmt.Println("2025/day/10 pt1", solvePt1(util.ReadLines("./2025/day10/input.txt")))
+	fmt.Println("2025/day/10 pt1", solvePt1(util2.ReadLines("./2025/day10/input.txt")))
 	//fmt.Println("2025/day/10 pt2", solvePt2(util.ReadLines("./2025/day10/input.txt")))
 }
 
@@ -61,7 +61,7 @@ func solvePt1(lines []string) int {
 		var currentPos Vector = 0
 		l := list.New() // BFS queue
 		l.PushBack(State{Position: currentPos, Count: 0})
-		visited := util.NewSet[Vector]()
+		visited := util2.NewSet[Vector]()
 		count := 0
 
 		for l.Len() > 0 {
