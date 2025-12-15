@@ -20,20 +20,3 @@ func Test_solvePt1(t *testing.T) {
 		}
 	})
 }
-
-func Test_solvePt2(t *testing.T) {
-	t.Run("input00.txt", func(t *testing.T) {
-		want := 2
-		got := solvePt2(lines0)
-		if got != want {
-			t.Errorf("Test solvePt2 wanted %v got %v", want, got)
-		}
-	})
-	t.Run("input.txt", func(t *testing.T) {
-		want := 294053029111296
-		got := solvePt2(lines)
-		if got != want {
-			t.Errorf("Test solvePt2 wanted %v got %v", want, got)
-		}
-	})
-}
