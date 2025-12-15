@@ -8,11 +8,11 @@ mod tests {
     static INPUT: Lazy<String> = Lazy::new(|| file(String::from("src/day10/input.txt")).unwrap());
     #[test]
     fn test_run_simple() {
-        assert_eq!(solve::run(&INPUT0.clone()), 0);
+        assert_eq!(solve::run(&INPUT0.clone()), 33);
     }
 
     #[test]
     fn test_run() {
-        assert_eq!(solve::run(&INPUT.clone()), 131580);
+        assert_eq!(solve::run(&INPUT.clone()), 17576);
     }
 }

@@ -4,6 +4,8 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+# need to disable default features to avoid linking to native solvers
+good_lp = { version = "1.14.2", default-features = false, features = ["microlp"] }
 once_cell = "1.21.3"
 
 [dev-dependencies]
@@ -15,4 +17,8 @@ harness = false
 
 [[bench]]
 name = "day8_bench"
+harness = false
+
+[[bench]]
+name = "day10_bench"
 harness = false
