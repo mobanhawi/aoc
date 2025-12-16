@@ -12,15 +12,8 @@ var l = util.ReadLines("input.txt")
 // goarch: arm64
 // pkg: github.com/mobanhawi/aoc/2025/day12
 // cpu: Apple M1 Pro
-// BenchmarkSolutionPt2
-// BenchmarkSolutionPt2-8   	    2842	    426429 ns/op
 // BenchmarkSolutionPt1
-// BenchmarkSolutionPt1-8   	    5281	    207265 ns/op
-func BenchmarkSolutionPt2(t *testing.B) {
-	for t.Loop() {
-		solvePt2(l)
-	}
-}
+// BenchmarkSolutionPt1-8   	    1887	    641951 ns/op
 func BenchmarkSolutionPt1(t *testing.B) {
 	for t.Loop() {
 		solvePt1(l)

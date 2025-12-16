@@ -4,6 +4,7 @@ import (
 	"github.com/mobanhawi/aoc/2025/day1"
 	"github.com/mobanhawi/aoc/2025/day10"
 	"github.com/mobanhawi/aoc/2025/day11"
+	"github.com/mobanhawi/aoc/2025/day12"
 	"github.com/mobanhawi/aoc/2025/day2"
 	"github.com/mobanhawi/aoc/2025/day3"
 	"github.com/mobanhawi/aoc/2025/day4"
@@ -26,4 +27,5 @@ func Solve() {
 	day9.Solve()
 	day10.Solve()
 	day11.Solve()
+	day12.Solve()
 }
